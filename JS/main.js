@@ -5,6 +5,8 @@ alert ("Selecciona una marca")
 let marca = +(prompt("1-Mercedes 2-Porsche 3-Audi"));
 */
 
+var cartId = "cart";
+
 //Constantes
 const Merc1 = {type:"Mercedes Benz", model:"C63", color:"Blanco"};
 const Merc2 = {type:"Mercedes Benz", model:"AMG One", color:"Blanco"};
@@ -96,106 +98,8 @@ const inventario = [
 ]
 
 
-
-/* Modelo y Precio
-
-let precioFinal = 0;
-
-if (marca==1){
-    alert ("Elegiste Mercedes Benz")
-
-    let modelo = +(prompt("1-C63 2-AMG 3-Maybach"));
-
-switch (modelo) {
-    case 1: {
-        alert (Merc1.model);
-        precioFinal = precioFinal + 160000;
-        break;
-    }
-    case 2: {
-        alert(Merc2.model);
-        precioFinal = precioFinal + 630000;
-        break;
-    }
-    case 3: {
-        alert(Merc3.model);
-        precioFinal = precioFinal + 450000;
-        break;
-    }
-    default:
-        alert("Esta opcion no es valida, porfavor vuelva a intetnar");       
-}
-
-
-}   else if (marca==2) {
-    alert ("Elegiste Porsche")
-    
-    let modelo = +(prompt("1-911 2-GT3 3-Panamera"));
-
-switch (modelo) {
-    case 1: {
-        alert (Porsche1.model);
-        precioFinal = precioFinal + 330000;
-        break;
-    }
-    case 2: {
-        alert(Porsche2.model);
-        precioFinal = precioFinal + 430000;
-        break;
-    }
-    case 3: {
-        alert(Porsche3.model);
-        precioFinal = precioFinal + 390000;
-        break;
-    }
-    default:
-        alert("Esta opcion no es valida, porfavor vuelva a intetnar");       
-}
-
-
-}   else if (marca==3) {
-    alert ("Elegiste Audi")
-
-    let modelo = +(prompt("1-S5 2-R8 3-Q7"));
-
-    switch (modelo) {
-        case 1: {
-            alert (Audi1.model);
-            precioFinal = precioFinal + 130000;
-            break;
-        }
-        case 2: {
-            alert(Audi2.model);
-            precioFinal = precioFinal + 460000;
-            break;
-        }
-        case 3: {
-            alert(Audi3.model);
-            precioFinal = precioFinal + 150000;
-            break;
-        }
-        default:
-            alert("Esta opcion no es valida, porfavor vuelva a intetnar");    
-    }
-}
-
-
-
-//Precio Final, Funcion
-let Tax= precioFinal*0.30
-function precio (precioFinal, Tax) {
-    return precioFinal + Tax;
-}
-*/
-
-
-/*Console
-console.log (Merc2);
-console.log (precioFinal + Tax);
-*/
-
 //Funcion Principal
-function Auto (marca, modelo, color, precio , img, cant) {
+function Item (marca, modelo, color, precio , img, cant) {
     this.marca=marca;
     this.modelo=modelo;
     this.color=color;
@@ -209,55 +113,137 @@ function Auto (marca, modelo, color, precio , img, cant) {
     this.cant=cant;
 }
 
+var cart = {
+
+    count: 0,
+    total: 0,
+    items: [],
+    getItems: function () {
+
+        return this.items;
+
+    },
+    setItems: function (items) {
+
+        this.items = items;
+        for (var i = 0; i < this.items.length; i++) {
+            var _item = this.items[i];
+            this.total += _item.total;
+        }
+    },
+    vaciarItems: function () {
+
+        this.items = [];
+        this.total = 0;
+        storage.clearCart();
+        helpers.emptyView();
+
+    },
+    agregarItem: function (item) {
+
+        if (this.containsItem(item.id) === false) {
+
+            this.items.push({
+                id: item.id,
+                name: item.name,
+                price: item.price,
+                count: item.count,
+                total: item.price * item.count
+            });
+
+            storage.saveCart(this.items);
+
+
+        } else {
+
+            this.updateItem(item);
+
+        }
+        this.total += item.price * item.count;
+        this.count += item.count;
+        helpers.updateView();
+
+    },
+}
+
+//Referencias 
+var helpers = {
+
+    getHtml: function (id) {
+
+        return document.getElementById(id).innerHTML;
+
+    },
+    setHtml: function (id, html) {
+
+        document.getElementById(id).innerHTML = html;
+        return true;
+
+    },
+
+    itemData: function (object) {
+        var item = {
+            name: object.getAttribute('data-name'),
+            price: object.getAttribute('data-price'),
+            count: count.value,
+            total: parseInt(object.getAttribute('data-price')) * parseInt(count.value)
+        };
+        return item;
+
+    },
+
+    actualizar: function () {
+        var items = cart.getItems(),
+            template = this.getHtml('cartT'),
+            compiled = _.template(template, {
+                items: items
+            });
+        this.setHtml('cartItems', compiled);
+        this.updateTotal();
+    },
+
+
+    Total: function () {
+        this.setHtml('totalPrice', cart.total + '$');
+    }
+};
+
+
+
+
 //Funcion de Carrito
-var shoppingCart = (function() {
+var shoppingCart = function() {
     cart = [];
 }
 // Guardar el Carrito
+var localAdapter = {
 
-function guardarCarrito(arr,Auto) {
-    localStorage.setItem('Carrito', JSON.stringify(cart));
-  }
- // Cargar Carrito
- function cargarCarrito(arr,Auto) {
-    cart = JSON.parse(localStorage.getItem('carrito'));
-  }
-  if (localStorage.getItem("carrito") != null) {
-    cargarCarrito();
-  }
+    saveCart: function (object) {
+        var stringified = JSON.stringify(object);
+        localStorage.setItem(cartId, stringified);
+        return true;
+    },
 
-  //Agregar al carrito
-  Object.agregarAlCarrito = function(marca, modelo, color, precio , img, cant){
-    for(var Auto in cart) {
-        if(cart[Auto].modelo= modelo) {
-            cart[Auto].cant ++;
-            guardarCarrito();
-            return;
-        }
+    getCart: function () {
+        return JSON.parse(localStorage.getItem(cartId));
+    },
+
+    clearCart: function () {
+        localStorage.removeItem(cartId);
     }
-    var Auto = nuevoAuto(marca, modelo, color, precio , img, cant);
-    cart.push(Auto);
-    guardarCarrito(); }
 
-//Limpiar Carrito
- obj.clearCart = function() {
-    cart = [];
-    saveCart();
-  }
-
+};
 //Eventos 
 //Sumar al carrito
-$('.agregar').click(function(event) {
-    event.preventDefault();
-    var modelo = $(this).data('modelo');
-    var precio = Number($(this).data('precio'));
-    shoppingCart.addItemToCart(modelo, precio, 1);
-    displayCart();
-  });
+document.addEventListener('DOMContentLoaded', function () {
 
+    var products = document.querySelectorAll('.Item');
+    [].forEach.call(Item, function (agregarItem) {
+        product.addEventListener('click', function (e) {
 
-// Clear Cart
-$('.clear-cart').click(function() {
-    shoppingCart.clearCart();
-    displayCart();
-  });
+            var item = helpers.itemData(this.parentNode);
+            cart.agregarItem(item);
+        });
+
+        });
+})
