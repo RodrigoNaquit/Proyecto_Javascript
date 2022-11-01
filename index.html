@@ -4,59 +4,106 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="./CSS/style.css">
+    <title>NLD</title>
 </head>
 <body>
     <header>
-        <h1> Naquit Dealership</h1>
+        <h1 class="title"> Naquit Luxury Dealership</h1>
+        
+        <!-- Nav -->
+<nav class="navbar navbar-inverse bg-inverse fixed-top bg-faded">
+    <div class="row">
+        <div class="col">
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cart">Cart (<span class="total-count"></span>)</button><button class="clear-cart btn btn-danger">Clear Cart</button></div>
+    </div>
+</nav>
+
     </header>
 
     <main>
-        <div class="Mercedes-Benz">
-            <h2>Mercedes Benz</h2>
-            <div>
-                <img src="./Media/C63.jpeg" alt="Amg C63" height="400px" width="600px">
-                <h3> C63  </h3>                
+        <div class="conteiner">
+            <h2 class="brand">Mercedes Benz</h2>
+            <div class="Mercedes-Benz">
+                <div>
+                    <img src="./Media/C63.jpeg" alt="Amg C63" height="300px" width="450px">
+                    <h3 class="item"> C63 $160,000  </h3>  
+                    <a class="add-to-cart btn btn-primary">Agregar al Carrito</a>              
+                </div>
+                <div>
+                    <img src="./Media/AMG One.webp" alt="" height="300px" width="450px">
+                    <h3 class="item"> AMG ONE $630,000 </h3>
+                    <a class="add-to-cart btn btn-primary">Agregar al Carrito</a>            
+                </div>
+                <div>
+                    <img src="./Media/Maybach.png" alt="" height="300px" width="450px">
+                    <h3 class="item"> Maybach $450,000 </h3>
+                    <a class="add-to-cart btn btn-primary">Agregar al Carrito</a>
+                </div>
             </div>
-            <div>
-                <img src="./Media/AMG One.webp" alt="" height="400px" width="600px">
-                <h3> AMG ONE </h3>            
+            <h2 class="brand"> Porsche</h2>
+            <div class="Porsche">
+                
+                <div>
+                    <img src="./Media/911.jpeg" alt="" height="300px" width="450px">
+                    <h3 class="item"> 911 $330,000 </h3>
+                    <a class="add-to-cart btn btn-primary">Agregar al Carrito</a>
+                </div>
+                <div>
+                    <img src="./Media/GT3.jpg" alt="" height="300px" width="450px">
+                    <h3 class="item"> GT3 $430,000</h3>
+                    <a class="add-to-cart btn btn-primary">Agregar al Carrito</a>
+                </div>
+                <div>
+                    <img src="./Media/Panamera.webp" alt="" height="300px" width="450px">
+                    <h3 class="item"> Panamera $390,000 </h3>
+                    <a class="add-to-cart btn btn-primary">Agregar al Carrito</a>
+                </div>
             </div>
-            <div>
-                <img src="./Media/Maybach.png" alt="" height="400px" width="600px">
-                <h3> Maybach </h3>
+            <h2 class="brand"> Audi</h2>
+            <div class="Audi">
+                <div>
+                    <img src="./Media/S5.webp" alt="" height="300px" width="450px">
+                    <h3 class="item"> S5 $130,000</h3>
+                    <a class="add-to-cart btn btn-primary">Agregar al Carrito</a>
+                </div>
+                <div>
+                    <img src="./Media/R8.jpg" alt="" height="300px" width="450px">
+                    <h3 class="item"> R8 $460,000</h3>       
+                    <a class="add-to-cart btn btn-primary">Agregar al Carrito</a>     
+                </div>
+                <div>
+                    <img src="./Media/Q7.jpg" alt="" height="300px" width="450px">
+                    <h3 class="item">Q7 $150,000</h3>
+                    <a class="add-to-cart btn btn-primary">Agregar al Carrito</a>
+                </div>
             </div>
         </div>
-        <div class="Porsche">
-            <h2> Porsche</h2>
-            <div>
-                <img src="./Media/911.jpeg" alt="" height="400px" width="600px">
-                <h3> 911 </h3>
-            </div>
-            <div>
-                <img src="./Media/GT3.jpg" alt="" height="400px" width="600px">
-                <h3> GT3 </h3>
-            </div>
-            <div>
-                <img src="./Media/Panamera.webp" alt="" height="400px" width="600px">
-                <h3> Panamera </h3>
-            </div>
+
+         <!-- Modal -->
+<div class="modal fade" id="cart" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Cart</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
-        <div class="Audi">
-            <h2> Audi</h2>
-            <div>
-                <img src="./Media/S5.webp" alt="" height="400px" width="600px">
-                <h3> S5 </h3>
-            </div>
-            <div>
-                <img src="./Media/R8.jpg" alt="" height="400px" width="600px">
-                <h3> R8 </h3>            
-            </div>
-            <div>
-                <img src="./Media/Q7.jpg" alt="" height="400px" width="600px">
-                <h3>Q7 </h3>
-            </div>
+        <div class="modal-body">
+          <table class="show-cart table">
+            
+          </table>
+          <div>Total price: $<span class="total-cart"></span></div>
         </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Order now</button>
+        </div>
+      </div>
+    </div>
+  </div> 
+  
 
     </main>
 

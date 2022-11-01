@@ -1,8 +1,9 @@
 //Simulador de E-Commerce
 
-//Seleccion del Auto
+/*eleccion del Auto
 alert ("Selecciona una marca")
 let marca = +(prompt("1-Mercedes 2-Porsche 3-Audi"));
+*/
 
 //Constantes
 const Merc1 = {type:"Mercedes Benz", model:"C63", color:"Blanco"};
@@ -17,11 +18,86 @@ const Audi1 = {type:"Audi", model:"S5", color:"Blanco"};
 const Audi2 = {type:"Audi", model:"R8", color:"Nardo Gris"};
 const Audi3 = {type:"Audi", model:"Q7", color:"Negro"};
 
-const autos = [Merc1, Merc2, Merc3, Porsche1, Porsche2, Porsche3, Audi1, Audi2, Audi3];
+const marca = document.querySelector("#marca"),
+    modelo = document.querySelector("#modelo"),
+    color = document.querySelector("#color"),
+    precio = document.querySelector("#precio"),
+    img = document.querySelector("#img"),
+    btnGuardar = document.querySelector("#btnGuardar");
+
+//Inventario
+const inventario = [
+    {
+        marca:"Mercedes Benz",
+        modelo:"C63 ",
+        color: "Blanco",
+        precio: "$160,000 ",
+        img: "./Media/C63.jpeg ",
+        },
+    {
+        marca:"Mercedes Benz ",
+        modelo:"AMG ONE",
+        color: "Blanco",
+        precio: "$630,000",
+        img: "./Media/AMG One.webp",
+        },
+    {   
+        marca:"Mercedes Benz",
+        modelo:"Maybach",
+        color: "Gris/Negro",
+        precio: "$450,000",
+        img: "./Media/Maybach.png",
+        },
+{
+        marca:"Porsche",
+        modelo:"911",
+        color: "Negro",
+        precio: "$330,000",
+        img: "./Media/911.jpeg",
+        },
+    {
+        marca:"Porsche",
+        modelo:"GT3",
+        color: "Verde",
+        precio: "$430,000",
+        img: "./Media/GT3.jpg",
+        },
+    {   
+        marca:"Porsche ",
+        modelo:"Panamera",
+        color: "Negro",
+        precio: "$390,000",
+        img: "./Media/Panamera.webp",
+        },
+
+{
+        marca:"Audi",
+        modelo:"S5",
+        color: "Blanco",
+        precio: "$130,000",
+        img: "./Media/S5.webp",
+        },
+    {
+        marca:"Audi",
+        modelo:"R8",
+        color: "Nardo Gris",
+        precio: "$460,000",
+        img: "./Media/R8.jpg",
+        },
+    {   
+        marca:"Audi",
+        modelo:"Q7",
+        color: "Gris",
+        precio: "$150,000",
+        img: "./Media/Q7.jpg",
+        },
+    
+        
+]
 
 
 
-// Modelo y Precio
+/* Modelo y Precio
 
 let precioFinal = 0;
 
@@ -103,16 +179,85 @@ switch (modelo) {
     }
 }
 
+
+
 //Precio Final, Funcion
 let Tax= precioFinal*0.30
 function precio (precioFinal, Tax) {
     return precioFinal + Tax;
 }
+*/
 
-//Console
+
+/*Console
 console.log (Merc2);
 console.log (precioFinal + Tax);
+*/
+
+//Funcion Principal
+function Auto (marca, modelo, color, precio , img, cant) {
+    this.marca=marca;
+    this.modelo=modelo;
+    this.color=color;
+    this.precio=parseFloat(precio);
+    if (precio==""){
+        this.precio = 1;
+    } else {
+        this.precio = precio;
+    }
+    this.img=img;
+    this.cant=cant;
+}
+
+//Funcion de Carrito
+var shoppingCart = (function() {
+    cart = [];
+}
+// Guardar el Carrito
+
+function guardarCarrito(arr,Auto) {
+    localStorage.setItem('Carrito', JSON.stringify(cart));
+  }
+ // Cargar Carrito
+ function cargarCarrito(arr,Auto) {
+    cart = JSON.parse(localStorage.getItem('carrito'));
+  }
+  if (localStorage.getItem("carrito") != null) {
+    cargarCarrito();
+  }
+
+  //Agregar al carrito
+  Object.agregarAlCarrito = function(marca, modelo, color, precio , img, cant){
+    for(var Auto in cart) {
+        if(cart[Auto].modelo= modelo) {
+            cart[Auto].cant ++;
+            guardarCarrito();
+            return;
+        }
+    }
+    var Auto = nuevoAuto(marca, modelo, color, precio , img, cant);
+    cart.push(Auto);
+    guardarCarrito(); }
+
+//Limpiar Carrito
+ obj.clearCart = function() {
+    cart = [];
+    saveCart();
+  }
+
+//Eventos 
+//Sumar al carrito
+$('.agregar').click(function(event) {
+    event.preventDefault();
+    var modelo = $(this).data('modelo');
+    var precio = Number($(this).data('precio'));
+    shoppingCart.addItemToCart(modelo, precio, 1);
+    displayCart();
+  });
 
 
-
-
+// Clear Cart
+$('.clear-cart').click(function() {
+    shoppingCart.clearCart();
+    displayCart();
+  });

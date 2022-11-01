@@ -1,0 +1,65 @@
+.title {
+    font-size: 50px;
+    font-weight: 600;
+    text-align: center;
+    background-color: rgb(41, 41, 41);
+    color: white;
+    border: 3px white solid;
+    padding: 15px;
+
+}
+
+.conteiner {
+    display: grid;
+    grid-template-rows:(6,3fr);
+
+    padding: 15px;
+}
+
+.Mercedes-Benz {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+
+    background-color: rgb(249, 249, 249);
+    padding: 10px;
+    
+}
+.Porsche {
+    display: flex;
+    flex-direction: row;
+
+    justify-content: space-evenly;
+
+    background-color: rgb(93, 241, 241);
+    padding: 10px;
+}
+.Audi {
+    display: flex;
+    flex-direction: row;
+
+    justify-content: space-evenly;
+
+    background-color: grey;
+    padding: 10px;
+}
+.conteiner h3{
+    text-align: center;
+    font-weight: 450;
+    color: black;
+    border: 1px black solid;
+}
+.conteiner a{
+    text-align: center;
+    font-weight: 200;
+    color: black;
+    background-color: yellow;
+    border: 1px black solid;
+}
+
+.brand {
+    text-align: center;
+    font-size: 20px;
+    font-weight: 600;
+    color: black;
+}
